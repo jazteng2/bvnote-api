@@ -1,0 +1,24 @@
+create schema bvn_v1;
+use bvn_v1;
+DROP TABLE Book;
+CREATE TABLE Book (
+	BookID CHAR(10) NOT NULL PRIMARY KEY,
+    Title VARCHAR(40) NOT NULL,
+    OldTestament BIT(1) NOT NULL);
+    
+CREATE TABLE Abbrev (
+    AbbrevID CHAR(10) NOT NULL PRIMARY KEY,
+    Abbreviation VARCHAR(40) NOT NULL,
+    BookID CHAR(10) NOT NULL,
+    FOREIGN KEY (BookID) REFERENCES Book(BookID));
+    
+CREATE TABLE Verse (
+    VerseID CHAR(10) NOT NULL PRIMARY KEY,
+    ChapterNo BIT(1) NOT NULL,
+    VerseNo BIT(1) NOT NULL,
+    Content TEXT NOT NULL,
+    BookID CHAR(10) NOT NULL,
+    FOREIGN KEY (BookID) REFERENCES Book(BookID));
+    
+ALTER TABLE Verse MODIFY COLUMN VerseID VARCHAR(36);
+SELECT * FROM Verse;
