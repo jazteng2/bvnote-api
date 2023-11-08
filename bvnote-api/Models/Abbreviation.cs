@@ -11,6 +11,5 @@ namespace bvnote_api.Models
         public string Id { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string BookID { get; set; } = null!;
-        public Book Book { get; set; } = null!;
     }
 }
