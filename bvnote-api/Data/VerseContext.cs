@@ -30,11 +30,36 @@ namespace bvnote_api.Data
                 verse.VerseNo = int.Parse(rd.GetString(2));
                 verse.Content = rd.GetString(3);
                 verse.BookId = rd.GetString(4);
-                verse.Book = _bookContext.GetById(rd.GetString(4));
             }
             catch (MySqlException e) { Console.Write(e); }
             finally { rd.Close(); _conn.Close(); }
             return verse;
+        }
+        public async Task<List<Verse>> GetBookVersesAsync(Book book)
+        {
+            List<Verse> verses = new List<Verse>();
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM Verse WHERE BookID = @id", _conn);
+            cmd.Parameters.AddWithValue("id", book.Id);
+            try
+            {
+                await _conn.OpenAsync();
+                var rd = await cmd.ExecuteReaderAsync();
+                while (await rd.ReadAsync())
+                {
+                    verses.Add(new Verse()
+                    {
+                        Id = rd.GetGuid(0),
+                        ChapterNo = int.Parse(rd.GetString(1)),
+                        VerseNo = int.Parse(rd.GetString(2)),
+                        Content = rd.GetString(3),
+                        BookId = rd.GetString(4),
+                    });
+                }
+                await rd.CloseAsync();
+            }
+            catch (MySqlException e) { Console.WriteLine(e); }
+            await _conn.CloseAsync();
+            return verses;
         }
         public List<Verse> GetChapterVerses(Book book, int chapterNo)
         {

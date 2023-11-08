@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using bvnote_api.Data;
 using bvnote_api.Models;
-using MySqlX.XDevAPI.Common;
 
 namespace bvnote_api.Controllers
 {
@@ -37,12 +36,16 @@ namespace bvnote_api.Controllers
             return book is null ? NotFound() : Ok(book);
         }
 
-        [HttpGet("{id}/verses")]
-        public async Task<IActionResult> GetChapterVersesAsync(string id, [FromQuery] int chapterNo)
+        [HttpGet("{id}/chapters")]
+        public async Task<IActionResult> GetChaptersAsync(string id, [FromQuery] int chapterNo)
         {
             Book book = await _bookContext.GetByIdAsync(id);
-            List<Verse> verses = await _verseContext.GetChapterVersesAsync(book, chapterNo);
-            return book is null && verses is null ? NotFound() : Ok(verses);
+            List<Verse> verses = await _verseContext.GetBookVersesAsync(book);
+            
+            if (book is null && verses is null) return NotFound();
+            return chapterNo > 0 
+                ? Ok(verses.FindAll(e => e.ChapterNo == chapterNo)) 
+                : Ok(verses);
         }
 
         [HttpGet("abbreviations")]
