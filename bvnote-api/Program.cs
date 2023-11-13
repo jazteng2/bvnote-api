@@ -1,17 +1,14 @@
 using bvnote_api.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using MySql.Data.MySqlClient;
-
+using MySqlConnector;
+// Instantiating web application
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Registering & configuring services
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "WebClients",
@@ -21,16 +18,19 @@ builder.Services.AddCors(options =>
         });
 });
 
-// My Services
-builder.Services.AddScoped<DbContext>();
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 34));
+var connString = builder.Configuration.GetConnectionString("Default");
+builder.Services.AddScoped(_conn => new MySqlConnection(connString));
+builder.Services.AddDbContext<MyContext>(
+    dbContextOptions => dbContextOptions
+        .UseMySql(connString, serverVersion)
+        .LogTo(Console.WriteLine, LogLevel.Information)
+        .EnableSensitiveDataLogging()
+        .EnableDetailedErrors()
+);
 
-// DB Connections
-builder.Services.AddScoped(_conn =>
-    new MySqlConnection(builder.Configuration.GetConnectionString("Default")));
+// Registering & configuring middleware
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-// middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -41,12 +41,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
-app.MapControllers();
-
 app.UseCors("WebClients");
-
+app.MapControllers();
 app.Run();
 

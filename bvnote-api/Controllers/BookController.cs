@@ -4,9 +4,12 @@ using bvnote_api.Models;
 
 namespace bvnote_api.Controllers
 {
+    [ApiController]
     [Route("api/books")]
     [Produces("application/json")]
     [Consumes("application/json")]
+
+    // Inherit ControllerBase as we do require support for view reponse in Controller
     public class BookController : ControllerBase
     {
 
