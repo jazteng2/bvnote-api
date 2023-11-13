@@ -9,7 +9,7 @@ public partial class Book
 
     public string Title { get; set; } = null!;
 
-    public ulong OldTestament { get; set; }
+    public bool OldTestament { get; set; }
 
     public virtual ICollection<Abbrev> Abbrevs { get; set; } = new List<Abbrev>();
 
