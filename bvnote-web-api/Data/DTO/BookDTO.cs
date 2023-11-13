@@ -4,7 +4,7 @@
     {
         public string? BookID { get; set; }
         public string? Title { get; set; }
-        public ulong OldTestament {  get; set; }
+        public bool OldTestament {  get; set; }
 
         // TODO: apply asynchronous
         public static BookDTO GetBookDTO(Book book)
