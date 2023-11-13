@@ -1,4 +1,3 @@
-using AutoMapper;
 using bvnote_web_api.Data;
 using Microsoft.AspNetCore.Mvc;
 using bvnote_web_api.Data.DTO;
@@ -37,14 +36,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseCors("WebClients");
-
-// AutoMapper JSON
-var config = new MapperConfiguration(cfg =>
-{
-    cfg.CreateMap<Book, BookDTO>();
-    cfg.CreateMap<Verse, VerseDTO>();
-    cfg.CreateMap<Abbrev, AbbrevDTO>();
-});
 
 // API Endpoints
 app.MapControllers();
