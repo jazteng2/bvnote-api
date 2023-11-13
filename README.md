@@ -9,7 +9,7 @@ In development
 # Correct API Project 
 bvnote-web-api
 
-# Available Endpoits
+# Available Endpoints
 - /api/v1/books (GET)
 - /api/v1/books/{bookId} (GET)
 - /api/v1/books/{bookId}/verses (GET)
