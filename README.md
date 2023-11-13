@@ -14,3 +14,6 @@ bvnote-web-api
 - /api/v1/books/{bookId} (GET)
 - /api/v1/books/{bookId}/verses (GET)
 - /api/v1/books/abbreviations (GET)
+
+# Tools
+- EF-Core
