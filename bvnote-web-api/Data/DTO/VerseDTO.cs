@@ -1,8 +1,10 @@
-﻿namespace bvnote_web_api.Data.DTO
+﻿using System.Collections.Concurrent;
+
+namespace bvnote_web_api.Data.DTO
 {
     public record VerseDTO
     {
-        public string? VerseId { get; set; }
+        public Guid VerseId { get; set; }
         public int? ChapterNo { get; set; }
         public int? VerseNo { get; set; }
         public string? Content { get; set; }
@@ -10,8 +12,19 @@
         // TODO: apply asynchronous
         public static List<VerseDTO> GetVerseDTOs(List<Verse> verses)
         {
-            var verseDTOs = new List<VerseDTO>();
-            foreach (var verse in verses)
+            return verses.Select(verse => new VerseDTO
+            {
+                VerseId = verse.VerseId,
+                ChapterNo = verse.ChapterNo,
+                VerseNo = verse.VerseNo,
+                Content = verse.Content
+            }).ToList();
+        }
+
+        public static List<VerseDTO> GetVerseDTOs_Parallel(List<Verse> verses)
+        {
+            var verseDTOs = new ConcurrentBag<VerseDTO>();
+            Parallel.ForEach(verses, verse =>
             {
                 verseDTOs.Add(new VerseDTO
                 {
@@ -20,8 +33,8 @@
                     VerseNo = verse.VerseNo,
                     Content = verse.Content
                 });
-            }
-            return verseDTOs;
+            });
+            return verseDTOs.ToList();
         }
     }
 }
