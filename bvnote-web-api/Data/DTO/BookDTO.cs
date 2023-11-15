@@ -1,4 +1,6 @@
-﻿namespace bvnote_web_api.Data.DTO
+﻿using System.Collections.Concurrent;
+
+namespace bvnote_web_api.Data.DTO
 {
     public record BookDTO
     {
@@ -18,18 +20,12 @@
         // TODO: apply asynchronous
         public static List<BookDTO> GetBookDTOs(List<Book> books)
         {
-            var bookDTOs = new List<BookDTO>();
-            foreach (var book in books)
+            return books.Select(book => new BookDTO
             {
-                bookDTOs.Add(new BookDTO
-                {
-                    BookID = book.BookId,
-                    Title = book.Title,
-                    OldTestament = book.OldTestament
-                });
-            }
-
-            return bookDTOs;
+                BookID = book.BookId,
+                Title = book.Title,
+                OldTestament = book.OldTestament
+            }).ToList();
         }
     }
 }

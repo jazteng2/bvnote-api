@@ -9,17 +9,12 @@
         // TODO: apply asynchronous
         public static List<AbbrevDTO> GetAbbrevDTOs(List<Abbrev> abbrevs)
         {
-            var abbrevDTOs = new List<AbbrevDTO>();
-            foreach (var abbrev in abbrevs)
+            return abbrevs.Select(abbrev => new AbbrevDTO
             {
-                abbrevDTOs.Add(new AbbrevDTO
-                {
-                    AbbrevId = abbrev.AbbrevId,
-                    Abbreviation = abbrev.Abbreviation,
-                    BookId = abbrev.BookId
-                });
-            }
-            return abbrevDTOs;
+                AbbrevId = abbrev.AbbrevId,
+                Abbreviation = abbrev.Abbreviation,
+                BookId = abbrev.BookId
+            }).ToList();
         }
     }
 }
