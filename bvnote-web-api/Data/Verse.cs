@@ -5,7 +5,7 @@ namespace bvnote_web_api.Data;
 
 public partial class Verse
 {
-    public string VerseId { get; set; } = null!;
+    public Guid VerseId { get; set; }
 
     public int? ChapterNo { get; set; }
 
