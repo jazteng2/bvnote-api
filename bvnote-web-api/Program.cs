@@ -1,31 +1,23 @@
 using bvnote_web_api.Data;
 using bvnote_web_api.RouteGroup;
-using bvnote_web_api.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("Default");
-var serverVersion = new MariaDbServerVersion(ServerVersion.AutoDetect(connectionString));
 
+// Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddMemoryCache();
-builder.Services.AddScoped<BookService>();
-builder.Services.AddDbContext<DbBvnContext>(
-    options => options
-    .UseMySql(connectionString, serverVersion)
-    .LogTo(Console.WriteLine, LogLevel.Information)
-    .EnableSensitiveDataLogging()
-    .EnableDetailedErrors());
-
+builder.Services.AddDbContext<BvnV1Context>(options => options.UseMySQL(connectionString));
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "WebClients",
         policy =>
         {
             policy.WithOrigins("http://127.0.0.1:5500");
-        });});
+        });
+});
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
