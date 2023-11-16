@@ -26,7 +26,7 @@ builder.Services.AddDbContext<DbBvnContext>(
     .EnableSensitiveDataLogging()
     .EnableDetailedErrors());
 
-builder.Services.AddScoped<BookService>();
+builder.Services.AddScoped<IBookService, BookService>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();

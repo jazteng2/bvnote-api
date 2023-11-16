@@ -5,7 +5,7 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace bvnote_web_api.Services
 {
-    public class BookService
+    public class BookService : IBookService
     {
         private readonly DbBvnContext _db;
         private readonly IMemoryCache _memoryCache;

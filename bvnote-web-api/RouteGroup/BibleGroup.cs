@@ -7,16 +7,16 @@ namespace bvnote_web_api.RouteGroup
     {
         public static RouteGroupBuilder MapBible(this RouteGroupBuilder group)
         {
-            group.MapGet("/books", async (BookService bookService)
+            group.MapGet("/books", async (IBookService bookService)
                 => Results.Ok(await bookService.GetBooksAsync()));
 
-            group.MapGet("/books/{bookId:length(10)}", async (string bookId, BookService bookService)
+            group.MapGet("/books/{bookId:length(10)}", async (string bookId, IBookService bookService)
                 => Results.Ok(await bookService.GetBookAsync(bookId)));
 
-            group.MapGet("/books/{bookId:length(10)}/verses", async (string bookId, [FromQuery] int chapterNo, BookService bookService)
+            group.MapGet("/books/{bookId:length(10)}/verses", async (string bookId, [FromQuery] int chapterNo, IBookService bookService)
                 => Results.Ok(await bookService.GetChapterVerses(bookId, chapterNo)));
 
-            group.MapGet("/books/verses", async ([FromQuery] string abbrev, [FromQuery] int chapterNo, BookService bookService)
+            group.MapGet("/books/verses", async ([FromQuery] string abbrev, [FromQuery] int chapterNo, IBookService bookService)
                 => Results.Ok(await bookService.GetChapterVerses_abbrev(abbrev, chapterNo)));
 
             return group;
