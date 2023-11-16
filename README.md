@@ -7,10 +7,10 @@ This is the main api for the web and mobile client applications in the future.
 In development
 
 # Available Endpoints
-- /api/v1/books (GET)
-- /api/v1/books/{bookId} (GET)
-- /api/v1/books/{bookId}/verses (GET)
-- /api/v1/books/verses?abbrev={param}&chapterNo={param} (GET)
+- (GET) /api/v1/books
+- (GET) /api/v1/books/{bookId}
+- (GET) /api/v1/books/{bookId}/verses?chapterNo={param}
+- (GET) /api/v1/books/verses?abbrev={param}&chapterNo={param}
 
 # Tools & Resources
 - Minimal API
