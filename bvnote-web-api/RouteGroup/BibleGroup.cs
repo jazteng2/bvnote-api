@@ -21,5 +21,14 @@ namespace bvnote_web_api.RouteGroup
 
             return group;
         }
+
+        public static RouteGroupBuilder MapDocuments(this RouteGroupBuilder group)
+        {
+            group.MapGet("/documents/{id}", () =>
+            {
+
+            });
+            return group;
+        }
     }
 }
