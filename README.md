@@ -17,3 +17,6 @@ In development
 - EF-Core
 - MariaDB
 - Bible data from HolyBooks
+
+# Simple system design of the bvnote system
+![image](https://github.com/jazteng2/bvnote-api/assets/36156694/4e76e235-4df6-45a3-97f0-d708d88e5c82)
