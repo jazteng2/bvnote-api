@@ -10,7 +10,7 @@ In development
 - /api/v1/books (GET)
 - /api/v1/books/{bookId} (GET)
 - /api/v1/books/{bookId}/verses (GET)
-- /api/v1/books/abbreviations (GET)
+- /api/v1/books/verses?abbrev={param}&chapterNo={param} (GET)
 
 # Tools & Resources
 - Minimal API
