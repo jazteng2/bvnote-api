@@ -7,11 +7,18 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("Default");
 var serverVersion = new MariaDbServerVersion(ServerVersion.AutoDetect(connectionString));
 
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache();
-builder.Services.AddScoped<BookService>();
+builder.Services.AddAuthorization();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "BvnClients",
+        policy =>
+        {
+            policy.WithOrigins("http://127.0.0.1:5500");
+        });});
+
 builder.Services.AddDbContext<DbBvnContext>(
     options => options
     .UseMySql(connectionString, serverVersion)
@@ -19,13 +26,7 @@ builder.Services.AddDbContext<DbBvnContext>(
     .EnableSensitiveDataLogging()
     .EnableDetailedErrors());
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: "WebClients",
-        policy =>
-        {
-            policy.WithOrigins("http://127.0.0.1:5500");
-        });});
+builder.Services.AddScoped<BookService>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
@@ -39,14 +40,14 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseCors();
 app.UseAuthorization();
-app.UseCors("WebClients");
-app.MapControllers();
 
 // API Endpoints
 app.MapGroup("/v1")
     .MapBible()
-    .RequireCors("WebClients");
+    .RequireCors("BvnClients");
 
 app.Map("/exception", () => { throw new InvalidOperationException("Sample Exception"); });
 app.Run();
