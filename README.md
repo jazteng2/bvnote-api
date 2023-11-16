@@ -1,7 +1,7 @@
 # bvnote-api
-Basic (maybe REST) WebAPI for requesting resources from a MysqlDatabase.
+As of now, a RestAPI for requesting resources from a database.
 It is for storing and retrieving bible resources from user input.
-This is the main api for the web and mobile client applications in the future. 
+This is the main api, see below for system design. 
 
 # Status
 In development
