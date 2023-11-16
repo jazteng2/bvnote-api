@@ -5,7 +5,7 @@ namespace bvn_console
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("So the LORD God said to the serpent:\n\t“Because you have done this, You are cursed more than all cattle,\nAnd more than every beast of the field;\nOn your belly you shall go,\nAnd you shall eat dust\nAll the days of your life.");
+            Console.WriteLine("So the LORD God said to the serpent:\n\t“Because you have done this, You are cursed more than all cattle,\n\tAnd more than every beast of the field;\n\tOn your belly you shall go,\n\tAnd you shall eat dust\n\tAll the days of your life.");
         }        
     }
 }
