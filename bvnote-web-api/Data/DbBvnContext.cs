@@ -53,25 +53,6 @@ public partial class DbBvnContext : DbContext
 
         modelBuilder.Entity<Verse>(entity =>
         {
-            entity.ToTable("verseesv");
-            entity.HasKey(e => e.VerseId).HasName("PRIMARY");
-            entity.HasIndex(e => e.BookId, "BookId");
-            entity.Property(e => e.VerseId)
-                .HasMaxLength(38)
-                .HasColumnName("VerseId");
-            entity.Property(e => e.BookId)
-                .HasMaxLength(10)
-                .IsFixedLength()
-                .HasColumnName("BookId");
-            entity.Property(e => e.Content).HasColumnType("text");
-            entity.HasOne(d => d.Book).WithMany(p => p.Verses)
-                .HasForeignKey(d => d.BookId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("verseesv_ibfk_1");
-        });
-
-        modelBuilder.Entity<Verse>(entity =>
-        {
             entity.HasKey(e => e.VerseId).HasName("PRIMARY");
             entity.ToTable("versenkjv");
             entity.HasIndex(e => e.BookId, "BookId");
