@@ -2,14 +2,14 @@
 As of now, a RestAPI for requesting resources from a database.
 It is for storing and retrieving centralized related bible resources.
 This is the main api, see below for system design. 
+## Status
+In development
 
 # Simple system design of the bvnote system
 ![image](https://github.com/jazteng2/bvnote-api/assets/36156694/4e76e235-4df6-45a3-97f0-d708d88e5c82)
 
 # DB Schema (Not Finished)
-
-# Status
-In development
+![image](https://github.com/jazteng2/bvnote-api/assets/36156694/d722f39d-ddb3-4e89-ba8e-2cb175c22626)
 
 # Not Implemented Yet
 - filtering
@@ -25,14 +25,14 @@ Likelyhood that it will be used and is practical of course. Logging may be imple
 /api/v1
 
 ## Available
-### BIBLE Section
+### Bible Section
 - (GET) /books
 - (GET) /books/{bookId}
 - (GET) /books/{bookId}/verses?chapterNo={param}
 - (GET) /books/verses?abbrev={param}&chapterNo={param}
 
 ## Unavailable
-### DOCUMENTS Section
+### TextEditor Section
 - (GET, SearchDoc) /documents/{id}
 - (GET, SearchInAll) /documents?find={param}
 - (GET, SearchInOne) /documents/{id}?find={param}
