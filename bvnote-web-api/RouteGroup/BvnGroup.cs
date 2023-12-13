@@ -31,48 +31,10 @@ namespace bvnote_web_api.RouteGroup
                 return verses is null ? Results.NotFound("Verses does not exist") : Results.Ok(verses);
             });
 
-            return group;
-        }
-
-        public static RouteGroupBuilder MapDocuments(this RouteGroupBuilder group)
-        {
-
-            group.MapGet("/documents/{id}", () =>
+            group.MapGet("/books/abbreviations", async (IAbbrevService abbrevService) =>
             {
-
-            });
-
-            // Search
-            group.MapGet("/documents", ([FromQuery] string find) =>
-            {
-
-            });
-
-            group.MapGet("/documents/{id}", (string id, [FromQuery] string find) =>
-            {
-
-            });
-
-            // By Verses
-            group.MapGet("/verses/{id}/documents", () =>
-            {
-
-            });
-
-            group.MapGet("/verses/{id}/documents/{id}", () =>
-            {
-
-            });
-
-            // By Videos
-            group.MapGet("/videos/{id}/documents", () =>
-            {
-
-            });
-
-            group.MapGet("/videos/{id}/documents/{id}", () =>
-            {
-
+                var abbrevs = await abbrevService.GetAbbrevsAsync();
+                return abbrevs is null ? Results.NotFound("Verses does not exist") : Results.Ok(abbrevs);
             });
 
             return group;
