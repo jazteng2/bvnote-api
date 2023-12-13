@@ -16,8 +16,11 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "BvnClients",
         policy =>
         {
-            policy.WithOrigins("http://127.0.0.1:5500");
-        });});
+            policy.WithOrigins("http://192.168.1.124:3000", "http://localhost:3000", "http://127.0.0.1:5500")
+                .AllowAnyOrigin()
+                .AllowAnyHeader();
+        });
+});
 
 builder.Services.AddDbContext<DbBvnContext>(
     options => options
@@ -27,6 +30,7 @@ builder.Services.AddDbContext<DbBvnContext>(
     .EnableDetailedErrors());
 
 builder.Services.AddScoped<IBookService, BookService>();
+builder.Services.AddScoped<IAbbrevService, AbbrevService>();
 
 // Configure the HTTP request pipeline.
 var app = builder.Build();
@@ -41,9 +45,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseCors();
+app.UseCors("BvnClients");
 app.UseAuthorization();
-
 // API Endpoints
 app.MapGroup("/v1")
     .MapBible()
